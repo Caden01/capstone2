@@ -1,6 +1,8 @@
 const axios = require("axios");
 const { Client } = require("pg");
 
+let db;
+
 async function getDataFromAPI(url) {
   try {
     const res = await axios.get(url);
@@ -12,7 +14,7 @@ async function getDataFromAPI(url) {
 }
 
 async function insertIntoDatabase(data, tableName) {
-  let db = new Client({
+  db = new Client({
     connectionString: "postgresql:///countries",
   });
 
@@ -75,3 +77,5 @@ async function main() {
 }
 
 main();
+
+module.exports = db;
