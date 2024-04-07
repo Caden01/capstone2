@@ -39,6 +39,20 @@ class User {
 
     return user;
   }
+
+  static async findAll() {
+    const result = await db.query(
+      `SELECT username,
+              first_name AS "firstName",
+              last_name AS "lastName",
+              email
+         FROM users
+         ORDER BY username
+      `,
+    );
+
+    return result.rows;
+  }
 }
 
 module.exports = User;
