@@ -7,6 +7,12 @@ const {
 } = require("../expressError");
 
 class User {
+  /** Register a new user
+   *
+   * Returns { username, fisrtName, lastName, email }
+   *
+   * Throws BadRequestError if it is a duplicate username
+   */
   static async register({ username, password, firstName, lastName, email }) {
     const checkIfDuplicate = await db.query(
       `SELECT username
@@ -40,6 +46,10 @@ class User {
     return user;
   }
 
+  /** Finds all users
+   *
+   * Return [{ username, first_name, last_name, email }]
+   */
   static async findAll() {
     const result = await db.query(
       `SELECT username,
@@ -54,6 +64,12 @@ class User {
     return result.rows;
   }
 
+  /** Return data about a specific user
+   *
+   * Returns { username, first_name, last_name }
+   *
+   * Throws NotFoundError if user doesn't exist
+   */
   static async get(username) {
     const userRes = await db.query(
       `SELECT username,
@@ -72,6 +88,8 @@ class User {
 
     return user;
   }
+
+  /** Deletes a user from the database */
 
   static async remove(username) {
     let result = await db.query(
