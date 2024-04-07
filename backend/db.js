@@ -43,7 +43,7 @@ async function insertIntoDatabase(data, tableName) {
 
   await db.query(`DROP TABLE IF EXISTS ${tableName}`);
 
-  const tableQeury = `
+  const countriesTableQeury = `
     CREATE TABLE IF NOT EXISTS ${tableName} (
       id SERIAL PRIMARY KEY,
       country_name VARCHAR(255),
@@ -54,7 +54,20 @@ async function insertIntoDatabase(data, tableName) {
   );
   `;
 
-  await db.query(tableQeury);
+  await db.query(countriesTableQeury);
+
+  const usersTableQuery = `
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      username VARCHAR(255),
+      password VARCHAR(255),
+      first_name VARCHAR(255),
+      last_name VARCHAR(255),
+      email VARCHAR(255)
+  );
+  `;
+
+  await db.query(usersTableQuery);
 
   for (const item of data) {
     const insertQuery = `
