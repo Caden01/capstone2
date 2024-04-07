@@ -15,7 +15,7 @@ class Country {
               subregion,
               population
        FROM countries
-       ORDER BY name
+       ORDER BY country_name
       `,
     );
     return countryRes.rows;
@@ -34,10 +34,11 @@ class Country {
               capital,
               region,
               subregion,
-              population,
+              population
        FROM countries
        WHERE country_name = $1
-      `[country_name],
+      `,
+      [country_name],
     );
 
     const country = countryRes.rows[0];

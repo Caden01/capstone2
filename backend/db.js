@@ -3,6 +3,27 @@ const { Client } = require("pg");
 
 let db;
 
+// async function createDatabase() {
+//   db = new Client({
+//     connectionString: "postgresql:///postgres",
+//   });
+//
+//   try {
+//     await db.connect();
+//
+//     await db.query("DROP DATABASE IF EXISTS countries;");
+//
+//     await db.query("CREATE DATABASE countries;");
+//
+//     console.log("Database dropped and recreated");
+//   } catch (err) {
+//     console.error("Error dropping and recreating database:", err);
+//   } finally {
+//     await db.end();
+//     console.log("Disconnected from database");
+//   }
+// }
+
 async function getDataFromAPI(url) {
   try {
     const res = await axios.get(url);
@@ -19,6 +40,8 @@ async function insertIntoDatabase(data, tableName) {
   });
 
   db.connect();
+
+  await db.query(`DROP TABLE IF EXISTS ${tableName}`);
 
   const tableQeury = `
     CREATE TABLE IF NOT EXISTS ${tableName} (
@@ -52,7 +75,7 @@ async function insertIntoDatabase(data, tableName) {
     } else {
       values = [
         item.name.common,
-        null,
+        "",
         item.region,
         item.subregion,
         item.population,
@@ -69,6 +92,8 @@ async function main() {
   const url = "https://restcountries.com/v3.1/all";
   const tableName = "countries";
 
+  // await createDatabase();
+
   const data = await getDataFromAPI(url);
 
   if (data) {
@@ -77,5 +102,11 @@ async function main() {
 }
 
 main();
+
+db = new Client({
+  connectionString: "postgresql:///countries",
+});
+
+db.connect();
 
 module.exports = db;
