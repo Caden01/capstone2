@@ -89,6 +89,43 @@ class User {
     return user;
   }
 
+  static async update(paramUsername, data) {
+    const keys = Object.keys(data);
+    if (keys.length === 0) throw new BadRequestError("No data");
+
+    let query = `UPDATE users SET `;
+
+    const { username, firstName, lastName, email } = data;
+
+    if (username) {
+      query += `username = '${username}', `;
+    }
+
+    if (firstName) {
+      query += `first_name = '${firstName}', `;
+    }
+
+    if (lastName) {
+      query += `last_name = '${lastName}', `;
+    }
+
+    if (email) {
+      query += `email = '${email}', `;
+    }
+
+    query = query.slice(0, -2);
+
+    query += ` WHERE username = $1 RETURNING username, first_name AS "firstName", last_name AS "lastName", email;`;
+
+    const result = await db.query(query, [paramUsername]);
+
+    const user = result.rows[0];
+
+    if (!user) throw new NotFoundError(`No user: ${paramUsername}`);
+
+    return user;
+  }
+
   /** Deletes a user from the database */
 
   static async remove(username) {
