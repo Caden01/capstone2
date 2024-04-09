@@ -48,6 +48,13 @@ router.get("/:username", async function (req, res, next) {
   }
 });
 
+/** POST /[username]
+ *
+ * Data can include: { username, firstName, lastName, email }
+ *
+ * Returns { username, firstName, lastName, email }
+ */
+
 router.post("/:username", async function (req, res, next) {
   try {
     const user = await User.update(req.params.username, req.body);

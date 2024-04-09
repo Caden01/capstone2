@@ -89,13 +89,36 @@ class User {
     return user;
   }
 
+  /** Update user data
+   *
+   * Not all fields need to be provided
+   *
+   * Data can include: { username, firsName, lastName, email }
+   *
+   * If no data given throw BadRequestError
+   * If username isn't unique throw BadRequestError
+   * If no user found throw NotFoundError
+   */
+
   static async update(paramUsername, data) {
     const keys = Object.keys(data);
     if (keys.length === 0) throw new BadRequestError("No data");
 
-    let query = `UPDATE users SET `;
-
     const { username, firstName, lastName, email } = data;
+
+    const checkIfDuplicate = await db.query(
+      `SELECT username
+         FROM users
+         WHERE username = $1
+      `,
+      [username],
+    );
+
+    if (checkIfDuplicate.rows[0]) {
+      throw new BadRequestError(`Duplicate username: ${username}`);
+    }
+
+    let query = `UPDATE users SET `;
 
     if (username) {
       query += `username = '${username}', `;
