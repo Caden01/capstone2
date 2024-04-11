@@ -49,7 +49,12 @@ function Homepage() {
     );
   }
 
-  return <div>{randomCountryInfo()}</div>;
+  return (
+    <div>
+      <h1>Home</h1>
+      {randomCountryInfo()}
+    </div>
+  );
 }
 
 export default Homepage;
