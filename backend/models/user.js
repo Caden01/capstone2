@@ -7,6 +7,32 @@ const {
 } = require("../expressError");
 
 class User {
+  static async authenticate(username, password) {
+    const result = await db.query(
+      `SELECT username,
+              password,
+              first_name as "firstName",
+              last_name as "lastName",
+              email
+       FROM users
+       WHERE username = $1
+      `,
+      [username],
+    );
+
+    const user = result.rows[0];
+
+    if (user) {
+      const isValid = await bcrypt.compare(password, user.password);
+      if (isValid === true) {
+        delete user.password;
+        return user;
+      }
+    }
+
+    throw new UnathorizedError("Invalid username or password");
+  }
+
   /** Register a new user
    *
    * Returns { username, fisrtName, lastName, email }
