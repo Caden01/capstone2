@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import UserContext from "../auth/UserContext";
 
 function Homepage() {
+  const { currentUser } = useContext(UserContext);
   const [countries, setCountries] = useState([{}]);
 
   useEffect(function getCountries() {
@@ -13,9 +15,7 @@ function Homepage() {
   }, []);
 
   function randomCountryInfo() {
-    console.log(countries);
     let randomNum = Math.floor(Math.random() * countries.length);
-    console.log(randomNum);
     return (
       <div>
         <h1>{countries[randomNum].country_name}</h1>

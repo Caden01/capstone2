@@ -4,8 +4,9 @@ import Homepage from "../homepage/Homepage";
 import CountryList from "../countries/CountryList";
 import CountryDetail from "../countries/CountryDetail";
 import SignupForm from "../auth/SignupForm";
+import LoginForm from "../auth/LoginForm";
 
-function Routes({ signup }) {
+function Routes({ signup, login }) {
   return (
     <div>
       <Switch>
@@ -23,6 +24,10 @@ function Routes({ signup }) {
 
         <Route exact path="/signup">
           <SignupForm signup={signup} />
+        </Route>
+
+        <Route exact path="/login">
+          <LoginForm login={login} />
         </Route>
 
         <Redirect to="/" />

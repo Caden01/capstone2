@@ -1,8 +1,9 @@
-import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import UserContext from "../auth/UserContext";
 
-function Nav() {
-  let loggedIn = true;
+function Nav({ logout }) {
+  const { currentUser } = useContext(UserContext);
   function loggedInNav() {
     return (
       <div className="container-fluid">
@@ -43,8 +44,8 @@ function Nav() {
               </button>
             </form>
             <li className="nav-link">
-              <NavLink className="nav-link" to="/signup">
-                Signup
+              <NavLink className="nav-link" to="/" onClick={logout}>
+                Log out
               </NavLink>
             </li>
           </ul>
@@ -96,6 +97,9 @@ function Nav() {
               <NavLink className="nav-link" to="/login">
                 Login
               </NavLink>
+              <NavLink className="nav-link" to="/signup">
+                Sign Up
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -103,9 +107,10 @@ function Nav() {
     );
   }
 
+  console.log(currentUser);
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      {loggedIn ? loggedInNav() : loggedOutNav()}
+      {currentUser ? loggedInNav() : loggedOutNav()}
     </nav>
   );
 }

@@ -4,6 +4,7 @@ import Nav from "./routes/Nav";
 import Routes from "./routes/Routes";
 import axios from "axios";
 import * as jose from "jose";
+import UserContext from "./auth/UserContext";
 
 export const TOKEN = "token";
 
@@ -37,12 +38,14 @@ function App() {
         if (token) {
           try {
             let { username } = jose.decodeJwt(token);
+            console.log(username);
             let res = await axios.get(
               `http://localhost:3001/users/${username}`,
             );
-            console.log("user:", res);
+            setCurrentUser(res.data.user);
+            console.log("user:", res.data.user);
           } catch (err) {
-            console.error("Error");
+            console.error("Error", err);
             setCurrentUser(null);
           }
         }
@@ -56,8 +59,7 @@ function App() {
   async function signup(data) {
     try {
       let res = await axios.post("http://localhost:3001/auth/register", data);
-      console.log(res);
-      setToken(res.token);
+      setToken(res.data.token);
       return { success: true };
     } catch (errors) {
       console.error("signup failed", errors);
@@ -65,12 +67,31 @@ function App() {
     }
   }
 
+  async function login(data) {
+    try {
+      let res = await axios.post("http://localhost:3001/auth/token", data);
+      console.log(res);
+      setToken(res.data.token);
+      return { success: true };
+    } catch (errors) {
+      console.error("login failed", errors);
+      return { success: false, errors };
+    }
+  }
+
+  function logout() {
+    setCurrentUser(null);
+    setToken(null);
+  }
+
   return (
     <BrowserRouter>
-      <div className="App">
-        <Nav />
-        <Routes signup={signup} />
-      </div>
+      <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+        <div className="App">
+          <Nav logout={logout} />
+          <Routes signup={signup} login={login} />
+        </div>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 }
