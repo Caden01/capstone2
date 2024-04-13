@@ -3,8 +3,9 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import CountryList from "../countries/CountryList";
 import CountryDetail from "../countries/CountryDetail";
+import SignupForm from "../auth/SignupForm";
 
-function Routes() {
+function Routes({ signup }) {
   return (
     <div>
       <Switch>
@@ -18,6 +19,10 @@ function Routes() {
 
         <Route exact path="/countries/:country_name">
           <CountryDetail />
+        </Route>
+
+        <Route exact path="/signup">
+          <SignupForm signup={signup} />
         </Route>
 
         <Redirect to="/" />

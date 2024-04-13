@@ -43,8 +43,8 @@ function Nav() {
               </button>
             </form>
             <li className="nav-link">
-              <NavLink className="nav-link" to="/logout">
-                Logout
+              <NavLink className="nav-link" to="/signup">
+                Signup
               </NavLink>
             </li>
           </ul>
