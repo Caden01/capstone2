@@ -1,9 +1,22 @@
-import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useContext, useState, useEffect } from "react";
+import { NavLink, Link } from "react-router-dom";
 import UserContext from "../auth/UserContext";
+import axios from "axios";
+import "./Nav.css";
+
+const res = await axios.get("http://localhost:3001/countries");
+let getCountries = res.data.countries;
 
 function Nav({ logout }) {
   const { currentUser } = useContext(UserContext);
+  const [countries, setCountries] = useState(getCountries);
+  const [value, setValue] = useState("");
+
+  function handleChange(evt) {
+    console.log(evt.target.value);
+    setValue(evt.target.value);
+  }
+
   function loggedInNav() {
     return (
       <div className="container-fluid">
@@ -32,16 +45,46 @@ function Nav({ logout }) {
                 Countries
               </NavLink>
             </li>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
+            <form
+              onSubmit={(evt) => evt.preventDefault()}
+              className="d-flex gap-2 ml-auto p-2"
+              role="search"
+            >
+              <div className="d-flex flex-column">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  value={value}
+                  onChange={handleChange}
+                />
+                <div>
+                  <ul className="suggestions list-group">
+                    {countries
+                      .filter((country) =>
+                        country.country_name.toLowerCase().includes(value),
+                      )
+                      .map((country) => (
+                        <li
+                          className="list-group-item"
+                          onClick={(evt) => setValue(country.country_name)}
+                          to={`countries/${country.country_name}`}
+                          key={country.country_name}
+                        >
+                          {country.country_name}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              </div>
+              <Link
+                className="btn btn-outline-success"
+                to={`countries/${value}`}
+                onClick={(evt) => setValue("")}
+              >
                 Search
-              </button>
+              </Link>
             </form>
             <li className="nav-link">
               <NavLink className="nav-link" to="/" onClick={logout}>
@@ -97,6 +140,8 @@ function Nav({ logout }) {
               <NavLink className="nav-link" to="/login">
                 Login
               </NavLink>
+            </li>
+            <li className="nav-link">
               <NavLink className="nav-link" to="/signup">
                 Sign Up
               </NavLink>
@@ -107,7 +152,6 @@ function Nav({ logout }) {
     );
   }
 
-  console.log(currentUser);
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       {currentUser ? loggedInNav() : loggedOutNav()}
