@@ -5,6 +5,7 @@ import CountryList from "../countries/CountryList";
 import CountryDetail from "../countries/CountryDetail";
 import SignupForm from "../auth/SignupForm";
 import LoginForm from "../auth/LoginForm";
+import Profile from "../profile/Profile";
 
 function Routes({ signup, login }) {
   return (
@@ -28,6 +29,10 @@ function Routes({ signup, login }) {
 
         <Route exact path="/login">
           <LoginForm login={login} />
+        </Route>
+
+        <Route exact path="/profile">
+          <Profile />
         </Route>
 
         <Redirect to="/" />

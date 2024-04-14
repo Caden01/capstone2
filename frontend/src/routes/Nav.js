@@ -61,20 +61,22 @@ function Nav({ logout }) {
                 />
                 <div>
                   <ul className="suggestions list-group">
-                    {countries
-                      .filter((country) =>
-                        country.country_name.toLowerCase().includes(value),
-                      )
-                      .map((country) => (
-                        <li
-                          className="list-group-item"
-                          onClick={(evt) => setValue(country.country_name)}
-                          to={`countries/${country.country_name}`}
-                          key={country.country_name}
-                        >
-                          {country.country_name}
-                        </li>
-                      ))}
+                    {value
+                      ? countries
+                          .filter((country) =>
+                            country.country_name.toLowerCase().includes(value),
+                          )
+                          .map((country) => (
+                            <li
+                              className="list-group-item"
+                              onClick={(evt) => setValue(country.country_name)}
+                              to={`countries/${country.country_name}`}
+                              key={country.country_name}
+                            >
+                              {country.country_name}
+                            </li>
+                          ))
+                      : null}
                   </ul>
                 </div>
               </div>
@@ -86,9 +88,21 @@ function Nav({ logout }) {
                 Search
               </Link>
             </form>
+          </ul>
+          <ul className="navbar-nav d-flex gap-2 just-content-center align-items-center">
             <li className="nav-link">
               <NavLink className="nav-link" to="/" onClick={logout}>
                 Log out
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/profile">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+                  className="rounded-circle"
+                  style={{ width: "50px" }}
+                  alt="Avatar"
+                />
               </NavLink>
             </li>
           </ul>
@@ -125,25 +139,59 @@ function Nav({ logout }) {
                 Countries
               </NavLink>
             </li>
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
+            <form
+              onSubmit={(evt) => evt.preventDefault()}
+              className="d-flex gap-2 ml-auto p-2"
+              role="search"
+            >
+              <div className="d-flex flex-column">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Search"
+                  aria-label="Search"
+                  value={value}
+                  onChange={handleChange}
+                />
+                <div>
+                  <ul className="suggestions list-group">
+                    {value
+                      ? countries
+                          .filter((country) =>
+                            country.country_name.toLowerCase().includes(value),
+                          )
+                          .map((country) => (
+                            <li
+                              className="list-group-item"
+                              onClick={(evt) => setValue(country.country_name)}
+                              to={`countries/${country.country_name}`}
+                              key={country.country_name}
+                            >
+                              {country.country_name}
+                            </li>
+                          ))
+                      : null}
+                  </ul>
+                </div>
+              </div>
+              <Link
+                className="btn btn-outline-success"
+                to={`countries/${value}`}
+                onClick={(evt) => setValue("")}
+              >
                 Search
-              </button>
+              </Link>
             </form>
+          </ul>
+          <ul className="navbar-nav d-flex gap-2 just-content-center align-items-center">
             <li className="nav-link">
               <NavLink className="nav-link" to="/login">
-                Login
+                Log in
               </NavLink>
             </li>
             <li className="nav-link">
               <NavLink className="nav-link" to="/signup">
-                Sign Up
+                Sign up
               </NavLink>
             </li>
           </ul>
