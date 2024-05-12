@@ -50,6 +50,10 @@ async function insertIntoDatabase(data, tableName) {
       capital VARCHAR(255),
       region VARCHAR(255),
       subregion VARCHAR(255),
+      currency VARCHAR(255),
+      language VARCHAR(255),
+      flag VARCHAR(255),
+      continent VARCHAR(255),
       population INT
   );
   `;
@@ -71,19 +75,22 @@ async function insertIntoDatabase(data, tableName) {
 
   for (const item of data) {
     const insertQuery = `
-      INSERT INTO ${tableName} (country_name, capital, region, subregion, population)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO ${tableName} (country_name, capital, region, subregion, population, currency, language, continent)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
 
     let values;
 
-    if (item.capital) {
+    if (item.capital && item.languages.length === 0) {
       values = [
         item.name.common,
         item.capital[0],
         item.region,
         item.subregion,
         item.population,
+        Object.values(item.langauges)[0],
+        item.flags[0],
+        item.continents[0],
       ];
     } else {
       values = [
@@ -92,6 +99,9 @@ async function insertIntoDatabase(data, tableName) {
         item.region,
         item.subregion,
         item.population,
+        "",
+        item.flags[0],
+        item.continents[0],
       ];
     }
 
