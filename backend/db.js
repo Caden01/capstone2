@@ -74,7 +74,6 @@ async function insertIntoDatabase(data, tableName) {
   await db.query(usersTableQuery);
 
   for (const item of data) {
-    console.log("COUNTRY", item);
     const insertQuery = `
       INSERT INTO ${tableName} (country_name, capital, region, subregion, population, language, flag, continent)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)

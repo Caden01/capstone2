@@ -5,7 +5,6 @@ import UserContext from "../auth/UserContext";
 
 function Homepage() {
   const { currentUser } = useContext(UserContext);
-  console.debug("Home", "currentUser=", currentUser);
   const [countries, setCountries] = useState([{}]);
 
   useEffect(function getCountries() {
