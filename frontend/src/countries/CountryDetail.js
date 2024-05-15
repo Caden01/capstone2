@@ -19,37 +19,74 @@ function CountryDetail() {
     },
     [country_name],
   );
-  console.log(country);
+
+  const divStyle = {
+    backgroundImage: `url(${country.flag})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    width: "400px",
+    height: "400px",
+    padding: "0",
+    margin: "0",
+    cursor: "pointer",
+  };
 
   return (
-    <div>
+    <div className="d-flex flex-column justify-content-center align-items-center gap-2">
       <h1>{country.country_name}</h1>
-      <ul>
-        <li>
-          <div>
-            <h3>Capital:</h3>
-            <p>{country.capital}</p>
+      <div className="d-flex flex-row gap-2">
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Capital</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {country.capital === "" ? "N/A" : country.capital}
+            </h6>
           </div>
-        </li>
-        <li>
-          <div>
-            <h3>Population:</h3>
-            <p>{country.population}</p>
+        </div>
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Population</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {country.population}
+            </h6>
           </div>
-        </li>
-        <li>
-          <div>
-            <h3>Region:</h3>
-            <p>{country.region}</p>
+        </div>
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Region</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {country.region}
+            </h6>
           </div>
-        </li>
-        <li>
-          <div>
-            <h3>Subregion:</h3>
-            <p>{country.subregion}</p>
+        </div>
+      </div>
+      <div className="d-flex flex-row gap-2">
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Subregion</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {country.subregion}
+            </h6>
           </div>
-        </li>
-      </ul>
+        </div>
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Language</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {country.language === "" ? "N/A" : country.language}
+            </h6>
+          </div>
+        </div>
+        <div class="card" style={{ width: "18rem" }}>
+          <div class="card-body text-center">
+            <h5 class="card-title mb-3">Continent</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">
+              {country.continent}
+            </h6>
+          </div>
+        </div>
+      </div>
+      <div style={divStyle}></div>
     </div>
   );
 }

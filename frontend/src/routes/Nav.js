@@ -21,7 +21,7 @@ function Nav({ logout }) {
     return (
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">
-          Navbar
+          Home
         </NavLink>
         <button
           className="navbar-toggler"
@@ -36,7 +36,7 @@ function Nav({ logout }) {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+            <li className="nav-item align-self-center">
               <NavLink
                 className="nav-link active"
                 aria-current="page"
@@ -68,7 +68,7 @@ function Nav({ logout }) {
                           )
                           .map((country) => (
                             <li
-                              className="list-group-item"
+                              className="list-group-item z-3"
                               onClick={(evt) => setValue(country.country_name)}
                               to={`countries/${country.country_name}`}
                               key={country.country_name}
@@ -82,7 +82,7 @@ function Nav({ logout }) {
               </div>
               <Link
                 className="btn btn-outline-success"
-                to={`countries/${value}`}
+                to={`/countries/${value}`}
                 onClick={(evt) => setValue("")}
               >
                 Search
@@ -115,7 +115,7 @@ function Nav({ logout }) {
     return (
       <div className="container-fluid">
         <NavLink className="navbar-brand" to="/">
-          Navbar
+          Home
         </NavLink>
         <button
           className="navbar-toggler"
@@ -130,7 +130,7 @@ function Nav({ logout }) {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+            <li className="nav-item align-self-center">
               <NavLink
                 className="nav-link active"
                 aria-current="page"
@@ -164,7 +164,7 @@ function Nav({ logout }) {
                             <li
                               className="list-group-item"
                               onClick={(evt) => setValue(country.country_name)}
-                              to={`countries/${country.country_name}`}
+                              to={`countries/${value}`}
                               key={country.country_name}
                             >
                               {country.country_name}
@@ -174,13 +174,15 @@ function Nav({ logout }) {
                   </ul>
                 </div>
               </div>
-              <Link
+              <NavLink
                 className="btn btn-outline-success"
-                to={`countries/${value}`}
-                onClick={(evt) => setValue("")}
+                to={`/countries/${value}`}
+                onClick={(evt) => {
+                  setValue("");
+                }}
               >
                 Search
-              </Link>
+              </NavLink>
             </form>
           </ul>
           <ul className="navbar-nav d-flex gap-2 just-content-center align-items-center">

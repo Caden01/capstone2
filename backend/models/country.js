@@ -13,6 +13,9 @@ class Country {
               capital,
               region,
               subregion,
+              language,
+              flag,
+              continent,
               population
        FROM countries
        ORDER BY country_name
@@ -34,6 +37,9 @@ class Country {
               capital,
               region,
               subregion,
+              language,
+              flag,
+              continent,
               population
        FROM countries
        WHERE country_name = $1

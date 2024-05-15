@@ -5,6 +5,7 @@ import Routes from "./routes/Routes";
 import axios from "axios";
 import * as jose from "jose";
 import UserContext from "./auth/UserContext";
+import "./App.css";
 
 export const TOKEN = "token";
 
@@ -70,7 +71,6 @@ function App() {
   async function login(data) {
     try {
       let res = await axios.post("http://localhost:3001/auth/token", data);
-      console.log(res);
       setToken(res.data.token);
       return { success: true };
     } catch (errors) {

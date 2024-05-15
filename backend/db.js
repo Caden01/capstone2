@@ -42,6 +42,7 @@ async function insertIntoDatabase(data, tableName) {
   db.connect();
 
   await db.query(`DROP TABLE IF EXISTS ${tableName}`);
+  console.log("Drop Table");
 
   const countriesTableQeury = `
     CREATE TABLE IF NOT EXISTS ${tableName} (
@@ -50,7 +51,6 @@ async function insertIntoDatabase(data, tableName) {
       capital VARCHAR(255),
       region VARCHAR(255),
       subregion VARCHAR(255),
-      currency VARCHAR(255),
       language VARCHAR(255),
       flag VARCHAR(255),
       continent VARCHAR(255),
@@ -74,8 +74,9 @@ async function insertIntoDatabase(data, tableName) {
   await db.query(usersTableQuery);
 
   for (const item of data) {
+    console.log("COUNTRY", item);
     const insertQuery = `
-      INSERT INTO ${tableName} (country_name, capital, region, subregion, population, currency, language, continent)
+      INSERT INTO ${tableName} (country_name, capital, region, subregion, population, language, flag, continent)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `;
 
@@ -89,7 +90,7 @@ async function insertIntoDatabase(data, tableName) {
         item.subregion,
         item.population,
         Object.values(item.langauges)[0],
-        item.flags[0],
+        item.flags.png,
         item.continents[0],
       ];
     } else {
@@ -100,7 +101,7 @@ async function insertIntoDatabase(data, tableName) {
         item.subregion,
         item.population,
         "",
-        item.flags[0],
+        item.flags.png,
         item.continents[0],
       ];
     }
@@ -122,6 +123,8 @@ async function main() {
   if (data) {
     await insertIntoDatabase(data, tableName);
   }
+
+  console.log("Successful");
 }
 
 main();

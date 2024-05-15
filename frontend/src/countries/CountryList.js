@@ -15,9 +15,9 @@ function CountryList() {
 
   return (
     <div>
-      <ul>
+      <ul className="list-group list-group-flush">
         {countries.map((country) => (
-          <li>
+          <li className="list-group-item text-center">
             <Link to={`/countries/${country.country_name}`}>
               {country.country_name}
             </Link>

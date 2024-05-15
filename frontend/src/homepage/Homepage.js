@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../auth/UserContext";
 
@@ -15,45 +16,40 @@ function Homepage() {
     fetchData();
   }, []);
 
-  function randomCountryInfo() {
-    let randomNum = Math.floor(Math.random() * countries.length);
-    return (
-      <div>
-        <h1>{countries[randomNum].country_name}</h1>
-        <ul>
-          <li>
-            <div>
-              <h3>Capital:</h3>
-              <p>{countries[randomNum].capital}</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Population:</h3>
-              <p>{countries[randomNum].population}</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Region:</h3>
-              <p>{countries[randomNum].region}</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Subregion:</h3>
-              <p>{countries[randomNum].subregion}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    );
-  }
+  console.log(countries);
+  let randomNum = Math.floor(Math.random() * countries.length);
+
+  const divStyle = {
+    backgroundImage: `url(${countries[randomNum].flag})`,
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    width: "400px",
+    height: "400px",
+    padding: "0",
+    margin: "0",
+    cursor: "pointer",
+  };
 
   return (
     <div>
-      <h1>Home</h1>
-      {randomCountryInfo()}
+      <div class="header-dark">
+        <div class="container hero">
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <h1 class="text-center mb-5">Countries</h1>
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <h3 class="text-center">
+                  Click the flag to check out:{" "}
+                  {countries[randomNum].country_name}
+                </h3>
+                <Link to={`/countries/${countries[randomNum].country_name}`}>
+                  <div style={divStyle}></div>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import SignupForm from "../auth/SignupForm";
 import LoginForm from "../auth/LoginForm";
 import Profile from "../profile/Profile";
 
-function Routes({ signup, login }) {
+function Routes({ signup, login, currentUser }) {
   return (
     <div>
       <Switch>
