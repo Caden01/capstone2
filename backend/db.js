@@ -3,27 +3,6 @@ const { Client } = require("pg");
 
 let db;
 
-// async function createDatabase() {
-//   db = new Client({
-//     connectionString: "postgresql:///postgres",
-//   });
-//
-//   try {
-//     await db.connect();
-//
-//     await db.query("DROP DATABASE IF EXISTS countries;");
-//
-//     await db.query("CREATE DATABASE countries;");
-//
-//     console.log("Database dropped and recreated");
-//   } catch (err) {
-//     console.error("Error dropping and recreating database:", err);
-//   } finally {
-//     await db.end();
-//     console.log("Disconnected from database");
-//   }
-// }
-
 async function getDataFromAPI(url) {
   try {
     const res = await axios.get(url);
@@ -40,6 +19,14 @@ async function insertIntoDatabase(data, tableName) {
   });
 
   db.connect();
+
+    const dbQuery = await db.query(
+    `SELECT FROM countries WHERE country_name = 'Albania'`,
+  );
+  if (dbQuery.rows.length === 0) {
+    await db.query(`CREATE DATABASE countries`);
+  }
+
 
   await db.query(`DROP TABLE IF EXISTS ${tableName}`);
   console.log("Drop Table");
