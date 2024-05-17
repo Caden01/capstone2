@@ -1,5 +1,33 @@
-Run "npm insall" inside the app directory to get all of the dependencies
+## About this project
+This project uses the [REST Countries API](https://restcountries.com/) that allows users to search for any country and see interesting facts about each country.
 
-Run "node backend/server.js"
+## Installation
 
-Run "npm start" inside frontend directory.
+Make sure to install [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
+1. Clone the repository
+```bash
+git clone https://github.com/Caden01/capstone2.git
+```
+2. Download [postgreSQL](https://postgresapp.com/downloads.html), follow [documentation](https://postgresapp.com/documentation/install.html) to get it set up and start postgreSQL.
+
+2. Install npm packages
+```bash
+npm install
+```
+
+## Usage
+
+1. Start the server and load database.
+```bash
+node backend/server.js
+```
+2. Start react frontend
+```bash
+// go into frontend/ directory
+npm start
+```
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
