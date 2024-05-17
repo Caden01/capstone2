@@ -7,13 +7,19 @@ Make sure to install [npm](https://docs.npmjs.com/downloading-and-installing-nod
 
 1. Clone the repository
 ```bash
-git clone https://github.com/Caden01/capstone2.git
+git clone -b test https://github.com/Caden01/capstone2.git
 ```
 2. Download [postgreSQL](https://postgresapp.com/downloads.html), follow [documentation](https://postgresapp.com/documentation/install.html) to get it set up and start postgreSQL.
 
 2. Install npm packages
 ```bash
+//
+cd backend/
 npm install
+cd ..
+cd frontend/
+npm install
+cd ..
 ```
 
 ## Usage
@@ -25,6 +31,7 @@ node backend/server.js
 2. Start react frontend
 ```bash
 // go into frontend/ directory
+cd frontend/
 npm start
 ```
 
